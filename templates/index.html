@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomegranate Geometry Predictor</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Pomegranate Geometry Predictor</h1>
+    <form id="predictionForm">
+        <label for="length">Length (mm):</label>
+        <input type="number" id="length" name="length" required><br><br>
+
+        <label for="width">Width (mm):</label>
+        <input type="number" id="width" name="width" required><br><br>
+
+        <label for="thickness">Thickness (mm):</label>
+        <input type="number" id="thickness" name="thickness" required><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const length = document.getElementById('length').value;
+            const width = document.getElementById('width').value;
+            const thickness = document.getElementById('thickness').value;
+
+            axios.post('/predict', {
+                length: length,
+                width: width,
+                thickness: thickness
+            })
+            .then(function (response) {
+                const result = response.data;
+                document.getElementById('result').innerHTML = `
+                    <h2>Prediction Results:</h2>
+                    <p>Volume: ${result.volume.toFixed(2)} mm³</p>
+                    <p>Lateral Surface Area: ${result.lateral_surface_area.toFixed(2)} mm²</p>
+                    <p>Sphericity: ${result.sphericity.toFixed(4)}</p>
+                `;
+            })
+            .catch(function (error) {
+                console.error(error);
+                document.getElementById('result').innerHTML = '<p>An error occurred. Please try again.</p>';
+            });
+        });
+    </script>
+</body>
+</html>
