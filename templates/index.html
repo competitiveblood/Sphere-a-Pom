@@ -38,12 +38,12 @@
             })
             .then(function (response) {
                 const result = response.data;
-                document.getElementById('result').innerHTML = `
-                    <h2>Prediction Results:</h2>
+                document.getElementById('result').innerHTML =
+                    `<h2>Prediction Results:</h2>
                     <p>Volume: ${result.volume.toFixed(2)} mm³</p>
                     <p>Lateral Surface Area: ${result.lateral_surface_area.toFixed(2)} mm²</p>
                     <p>Sphericity: ${result.sphericity.toFixed(4)}</p>
-                `;
+                    <p>Weight: ${result.weight.toFixed(2)} grams</p>`;
             })
             .catch(function (error) {
                 console.error(error);

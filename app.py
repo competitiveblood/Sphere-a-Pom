@@ -8,6 +8,7 @@ from tensorflow.keras.optimizers import Adam
 
 app = Flask(__name__)
 
+# Load or create and train model
 def load_or_create_model():
     try:
         model = load_model('pomegranate_model.h5')
@@ -79,10 +80,18 @@ def predict():
 
         prediction = model.predict(input_scaled)
 
+        volume = float(prediction[0][0])
+        lateral_surface_area = float(prediction[0][1])
+        sphericity = float(prediction[0][2])
+
+        # Calculate weight
+        weight = volume / 1000 * 1.06  # Convert mm³ to cm³ and use density
+
         result = {
-            'volume': float(prediction[0][0]),
-            'lateral_surface_area': float(prediction[0][1]),
-            'sphericity': float(prediction[0][2])
+            'volume': volume,
+            'lateral_surface_area': lateral_surface_area,
+            'sphericity': sphericity,
+            'weight': weight
         }
 
         return jsonify(result)
