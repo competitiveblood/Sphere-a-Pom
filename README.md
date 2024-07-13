@@ -1,5 +1,4 @@
-# pomegranate_predictor
- 
+
 ### Project Description: Pomegranate Geometry Predictor
 
 The **Pomegranate Geometry Predictor** is a web application designed to estimate the geometric properties of pomegranates based on their physical dimensions. Users can input the **length**, **width**, and **thickness** of a pomegranate, and the model predicts the following parameters:
